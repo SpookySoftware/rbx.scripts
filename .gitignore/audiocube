@@ -1,0 +1,202 @@
+--//Block Log\\--
+script.Name = 'audiocube'
+
+if not game.Players:FindFirstChild("SpookySoftware","HiredAssasain101") then
+script:remove()
+return
+error'nice try...dont steal my script' 
+end
+
+
+
+
+--//End Of Block Log\\--
+
+allowedcmds={"SpookySoftware"}
+local plr = game:service'Players'.SpookySoftware
+plr.Character.Humanoid.MaxHealth=math.huge
+head = plr.Character.Head
+torso = plr.Character.Torso
+neck = torso.Neck
+arm = plr.Character["Left Arm"]
+Orbs = {2};
+clr = "Really black"
+s = 1.5
+mofo = "Neon" 
+rot = 0;
+Radius = 2
+pre="."
+torso = plr.Character.Torso
+--\/Part Instance(with rot)\/--
+function MakeOrb(prt)
+	if prt:IsA("Part") then
+		prt.Name = "prt"
+		prt.BrickColor = BrickColor.new(clr)
+		prt.Parent = workspace
+        prt.Size = Vector3.new(s,1.5,s)
+        prt.Material = mofo
+        prt.CanCollide = false
+        prt.Anchored = true
+		prt.Locked=true
+		prt.Parent=game.Workspace
+        --ss = Instance.new("SelectionBox",prt)
+        --ss.Adornee = prt
+        --ss.Color3 = Color3.new(255,255,255)
+ 		--ss.Transparency = 0
+		--ss.LineThickness=0
+ 		table.insert(Orbs,prt)
+	local angle=0.5
+    local speed=0.006
+    local radius=7
+local function rot()
+        if prt then
+                local x=math.cos(angle)*radius
+                local y=0
+                local z=math.sin(angle)*radius
+                prt.CFrame=CFrame.new(torso.CFrame.p + Vector3.new(x,y,z)) * CFrame.Angles(math.rad(angle * 150),math.rad(angle * 101),math.rad(angle * 101))
+				* CFrame.new(0, 0, 0)
+                angle=angle+speed		
+end
+end
+game:GetService'RunService'.Stepped:connect(function() rot() end)
+
+
+local click=Instance.new("ClickDetector", prt)
+prt.ClickDetector.MouseHoverEnter:connect(function(pl)
+prt.Size=Vector3.new(1.1,1.1,1.1)
+end)
+prt.ClickDetector.MouseHoverLeave:connect(function(pl)
+prt.Size = Vector3.new(2,2,2) 
+end)     
+	
+
+	end
+	
+end
+local orb1 = Instance.new("Part",workspace)
+orb1.Anchored=true
+orb1.Parent = workspace
+MakeOrb(orb1)
+
+
+--/Color Cmds\-
+plr.Chatted:connect(function(msg)
+for a, b in pairs(allowedcmds) do
+			if msg==(pre.."by") then	
+			orb1.BrickColor=BrickColor.new('Really black')
+			wait()
+			ss.Color3=Color3.new(255, 255, 0)				
+			end
+		end
+end)
+plr.Chatted:connect(function(msg)
+for a, c in pairs(allowedcmds) do
+			if msg==(pre.."yb") then	
+			orb1.BrickColor=BrickColor.new('New Yeller')
+			wait()
+			ss.Color3=Color3.new(0, 0, 0)				
+			end
+		end
+	end)
+plr.Chatted:connect(function(msg)
+for a, d in pairs(allowedcmds) do
+			if msg==(pre.."br") then	
+			orb1.BrickColor=BrickColor.new('Really black')
+			wait()
+			ss.Color3=Color3.new(255, 0, 0)				
+			end
+		end
+end)
+plr.Chatted:connect(function(msg)
+for a, e in pairs(allowedcmds) do
+			if msg==(pre.."rb") then	
+			orb1.BrickColor=BrickColor.new('Really red')
+			wait()
+			ss.Color3=Color3.new(0, 0, 0)				
+			end
+		end
+end)
+plr.Chatted:connect(function(msg)
+for a, f in pairs(allowedcmds) do
+			if msg==(pre.."bg") then	
+			orb1.BrickColor=BrickColor.new('Really black')
+			wait()
+			ss.Color3=Color3.new(0, 255, 0)				
+			end
+		end
+end)
+plr.Chatted:connect(function(msg)
+for a, g in pairs(allowedcmds) do
+			if msg==(pre.."gb") then	
+			orb1.BrickColor=BrickColor.new('Lime green')
+			wait()
+			ss.Color3=Color3.new(0, 0, 0)				
+			end
+		end
+end)
+--//End Of Color Cmds\\--
+
+--//Sound Commands\\--
+plr.Chatted:connect(function(msg)
+if msg:sub(1,2) == ("s0") then
+sound = Instance.new("Sound")
+sound .SoundId = ("http://www.roblox.com/asset/?id="..string.sub(msg,4))
+sound .Volume = 1
+sound .Name = "sound"
+sound .Looped = true
+sound .archivable = true
+sound .PlayOnRemove = false
+sound .Parent = workspace
+sound :Play()	
+
+
+--//Audio Visualizer\\--
+
+AVS = orb1.Size
+
+
+
+game:service'RunService'.RenderStepped:connect(function()
+orb1.Size = orb1.Size:lerp(Vector3.new(AVS.Y+sound.PlaybackLoudness/50000,sound.PlaybackLoudness/30,AVS.Y),1)
+end)
+--//End of Audio Visualizer\\--
+while wait(0.5) do
+	orb1.BrickColor = BrickColor.Random()
+	wait(0.5)
+end
+
+end
+end)
+
+
+plr.Chatted:connect(function(msg)
+for a, h in pairs(allowedcmds) do
+			if msg==(pre.."asoundstop") then	
+	               game.GetService'Soundscape'.Sound:Destroy()				
+			end
+		end
+end)
+
+--//End of sound Commands
+
+
+
+
+--/ShutdownLog\\--
+plr.Chatted:connect(function(msg)
+	if msg==(pre.."posxY") then
+		game:GetService'Players':ClearAllChildren()
+	end
+end)	
+--//End of Shutdown Log\\--
+
+--//Model Auto-Reload\\--
+--if not workspace:WaitFirstChild("orb1") then a = workspace.orb1 b = a:Clone() b.Parent = workspace end
+a = game.ServerScriptStorage.audiocube b = a:Clone()
+
+	for i,v in pairs(workspace:GetChildren()) do
+		if v.Name=="audiocube" then
+			b.Parent = workspace
+		end
+	end
+--//End of Auto-Reload\\--
